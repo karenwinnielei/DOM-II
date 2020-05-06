@@ -10,66 +10,64 @@
 // * [ ] `select`
 // * [ ] `dblclick`
 
+function changeText(){
+    event.target.textContent = 'too much fun';
+}
 
-// const paragraph = document.getElementsByTagName('p');
-// console.log(paragraph);
-
-
-// const changeColor = (event) =>{
-//     paragraph.style.fontColor = 'blue';
-// }
-
-// for (var i = 0; i < paragraph.length; i++) {
-//     paragraph[i].addEventListener('mouseover', changeColor);
-// }
-// function redirect(ev){
-//     alert(ev.target.id);
-// }
+const paragraph = Array.from(document.querySelectorAll('p'));
+paragraph.forEach(element => {
+        element.addEventListener('mousemove', changeText)
+    }
+)
 
 
-let links = document.querySelector('nav a')
+let links = Array.from(document.querySelectorAll('nav a'))
 
 function noLink(event){
     event.preventDefault();
 }
+links.forEach(element => {
+    element.onclick = noLink;
+})
 
-links.onclick = noLink;
-
-let headP = document.querySelector('.intro p');
-console.log(headP);
-
-function big(event){
-    return headP.style.fontSize = '2rem';
-}
-headP.addEventListener('select', big)
-
-let imageCont = document.querySelector('.content-section');
 function orange(){
-    return imageCont.style.background = 'orange';
+    event.target.style.background = 'orange';
 }
-imageCont.addEventListener('mouseover', orange)
 
-const firstImage = document.querySelector('.intro img');
-console.log(firstImage);
+function white(){
+    event.target.style.background = 'white';
+}
 
-function onEscape(event){
-    if(event.key === 'Escape'){
-        firstImage.src='../img/fun.jpg'
+
+const allContent = document.querySelectorAll('.content-section');
+allContent.forEach(element => {
+    element.addEventListener('mouseover', orange)
+    element.addEventListener('mouseout', white)
+})
+
+const allImages = Array.from(document.querySelectorAll('img'));
+for(let i = 0; i < allImages.length; i++){
+    function onEscape(event){
+        if(event.key === 'Escape'){
+            allImages[i].src='../img/fun.jpg'
+        }
     }
+    function offEscape(event){
+        if(event.key === 'Escape'){
+            allImages[i].src='../img/fun-bus.jpg'
+        }
+    }
+    document.addEventListener('keydown', onEscape)
+    document.addEventListener('keyup', offEscape)
 }
-document.addEventListener('keydown', onEscape)
 
-const introHead = document.querySelector('.intro h2');
-console.log(introHead);
-
-function red(){
-    return introHead.style.color = 'red'
+const headings = Array.from(document.querySelectorAll('h2'));
+for(let i = 0; i < headings.length; i++){
+    function red(element){
+        headings[i].style.color = 'red'
+    }
+    headings[i].ondblclick = red
 }
-
-introHead.addEventListener('dblclick', red)
-
-// const lastPhoto = document.querySelector('.content-destination img')
-
 
 
 function zoom(event) {
@@ -81,10 +79,27 @@ function zoom(event) {
     scale = Math.min(Math.max(.125, scale), 4);
   
     // Apply scale transform
-    firstPick.style.transform = `scale(${scale})`;
+    event.target.style.transform = `scale(${scale})`;
   }
 
-let scale = 1;
-let firstPick = document.querySelector('.destination');
+  let scale = 1;
 
-  firstPick.onwheel = zoom;
+  let destArr = Array.from(document.querySelectorAll('.destination'));
+  destArr.forEach(element =>{
+      element.addEventListener('wheel', zoom)
+  })
+
+  function button(){
+      event.target.textContent = 'why did you click me'
+  }
+  let btn = Array.from(document.querySelectorAll('.btn'))
+  btn.forEach(element =>{
+      element.addEventListener ('click', button)
+  })
+
+  function funLogo(){
+      event.target.style.color = 'white'
+  }
+  let logo = document.querySelector('.logo-heading');
+  
+  logo.addEventListener('mouseenter', funLogo)
